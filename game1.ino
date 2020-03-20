@@ -5,9 +5,9 @@
 #define PAD_RIGHT   8
 #define RESET       2
 
-#define NUM_LEDS    120
+#define NUM_LEDS    20
 
-#define BRIGHTNESS  63 // 0-255
+#define BRIGHTNESS  31 // 0-255
 #define DEBOUNCE_DELAY  200 //ms
 
 CRGB leds[NUM_LEDS];
@@ -57,10 +57,50 @@ void loop() {
     }
     rightButtonPrev = rightButton;
 
-    if (score > NUM_LEDS) {
-        // trigger win sequence for right player, stop
-    } else if (score <0) {
-        // trigger win sequence for right player, stop
+    if (score >= NUM_LEDS) {
+        Serial.println("Blue Wins");      
+        for (int j = 0; j < 5; j++) {
+          for (int i = 0; i <= (NUM_LEDS-1)/2; i++) {
+              leds[i*2] = CRGB::Blue;
+              leds[i*2+1] = CRGB::Black;
+              FastLED.show();
+          }
+          delay(500);
+          for (int i = 0; i <= (NUM_LEDS-1)/2; i++) {
+              leds[i*2] = CRGB::Black;
+              leds[i*2+1] = CRGB::Blue;
+              FastLED.show();
+          }
+          delay(500);
+        }
+          for (int i = 0; i <= (NUM_LEDS-1)/2; i++) {
+              leds[i*2+1] = CRGB::Black;
+              FastLED.show();
+          }
+        Serial.println("End Game. Press Reset");
+        while (1) delay (10000);
+    } else if (score <=0) {
+        Serial.println("Blue Wins");      
+        for (int j = 0; j < 5; j++) {
+          for (int i = 0; i <= (NUM_LEDS-1)/2; i++) {
+              leds[i*2] = CRGB::Red;
+              leds[i*2+1] = CRGB::Black;
+              FastLED.show();
+          }
+          delay(500);
+          for (int i = 0; i <= (NUM_LEDS-1)/2; i++) {
+              leds[i*2] = CRGB::Black;
+              leds[i*2+1] = CRGB::Red;
+              FastLED.show();
+          }
+          delay(500);
+        }
+          for (int i = 0; i <= (NUM_LEDS-1)/2; i++) {
+              leds[i*2+1] = CRGB::Black;
+              FastLED.show();
+          }
+        Serial.println("End Game. Press Reset");
+        while (1) delay (10000);
     }
   
     if (score != scorePrev) {
@@ -81,37 +121,38 @@ void loop() {
 void ledInit() {
   // countdown
   for (int i = 0; i <= (NUM_LEDS-1); i++) {
-      leds[i] = CRGB::Green;
+    leds[i] = CRGB::Green;
+    FastLED.show();
   }
-  FastLED.show();
-  FastLED.delay(1000);
+  delay(1000);
   for (int i = NUM_LEDS*0.75; i <= (NUM_LEDS-1); i++) {
-      leds[i] = CRGB::Black;
+    leds[i] = CRGB::Black;
+    FastLED.show();
   }
-  FastLED.show();
-  FastLED.delay(1000);
+  delay(1000);
   for (int i = NUM_LEDS*0.5; i <= (NUM_LEDS*0.75-1); i++) {
-      leds[i] = CRGB::Black;
+    leds[i] = CRGB::Black;
+    FastLED.show();
   }
-  FastLED.show();
-  FastLED.delay(1000);
+  delay(1000);
   for (int i = NUM_LEDS*0.25; i <= (NUM_LEDS*0.5-1); i++) {
       leds[i] = CRGB::Black;
+      FastLED.show();
   }
-  FastLED.show();
-  FastLED.delay(1000);
-  for (int i = 0; i <= (NUM_LEDS*0.5-1); i++) {
+  delay(1000);
+  for (int i = 0; i <= (NUM_LEDS*0.25-1); i++) {
       leds[i] = CRGB::Black;
+      FastLED.show();
   }
-  FastLED.show();
   delay(1000);  
   // reset score to the middle
   for (int i = 0; i <= (NUM_LEDS-1); i++) {
     if (i < NUM_LEDS/2) {
       leds[i] = CRGB::Blue;
+      FastLED.show();
     } else {
       leds[i] = CRGB::Red;
+      FastLED.show();
     }
   }
-  FastLED.show();
 }
