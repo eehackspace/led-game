@@ -2,4 +2,4 @@
 
 | File | Description |
 |:--- | :--- |
-| game1.cpp | LED Tug of war using WS2812 Light strip |
+| game1.ino | LED Tug of war using WS2812 Light strip |
